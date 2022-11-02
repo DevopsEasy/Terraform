@@ -2,8 +2,8 @@
 * Windows: We have two options for installing terraform
     * Chocolatey:
          * Install chocolatey [Refer Here](https://chocolatey.org/install)
-Use Chocolatey to install terraform ``` choco install terraform ```
-Manually configure terraform [Refer Here](https://www.terraform.io/downloads)
+* Use Chocolatey to install terraform ``` choco install terraform ```
+* Manually configure terraform [Refer Here](https://www.terraform.io/downloads)
 Mac: [Refer Here](https://formulae.brew.sh/formula/terraform) ``` brew install terraform ```
 
 ## Working with Terraform
