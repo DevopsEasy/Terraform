@@ -1,149 +1,72 @@
 ### Installing Terraform
-* Windows: We have two options for installing terraform
-    * Chocolatey:
-         * Install chocolatey [Refer Here](https://chocolatey.org/install)
-* Use Chocolatey to install terraform ``` choco install terraform ```
-* Manually configure terraform [Refer Here](https://www.terraform.io/downloads)
-Mac: [Refer Here](https://formulae.brew.sh/formula/terraform) ``` brew install terraform ```
 
-## Working with Terraform
-* Identify the infrastructure you need to create/provision
-* Identify the providers
-* Configure the provider using HCL (Hashicorp Configuration Language)
-* Configure the resources to be created using HCL
+* Terraform is an open-source project developed in Google’s GO language
+* Installing Terraform is much like downloading an exe/executable on your system adding it to the PATH variable and using it.
+* Mac users => Install Homebrew [Refer Here](https://docs.brew.sh/Installation)
 
-### Activity 1: Create an S3 Bucket in AWS
-* Manual Steps: Login to the AWS Account
-
-![Preview](./Images/tf7.png)
-
-![Preview](./Images/tf8.png)
-
-![Preview](./Images/tf9.png)
-
-![Preview](./Images/tf10.png)
-
-![Preview](./Images/tf11.png)
-
-![Preview](./Images/tf12.png)
-
-![Preview](./Images/tf13.png)
-
-* Provider is where to create infra and Resource is what we are trying to create.
-* In the above case
-    * Provider: AWS
-    * Resource: S3 Bucket
-* In AWS to connect to aws account we had to login using email and password.
-* Generally Provider configuration involves authentication and it depends on how provider allows it.
-* [Refer Here](https://registry.terraform.io/browse/providers) for the terraform providers
-* AWS Provider documentation
-
-![Preview](./Images/tf14.png)
-
-* To work with AWS Provider we need access key and secret key, lets see how to generate it [Refer Here](https://sst.dev/chapters/create-an-iam-user.html)
-* [Refer Here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) for the documentation of the s3 bucket
-* Now lets try to create infra from terraform
-
-![Preview](./Images/tf15.png)
-
-* Initialize the directory
-
-![Preview](./Images/tf16.png)
-
-* Validate the configuration
-
-![Preview](./Images/tf17.png)
-
-* Now lets create the infrastructure ``` terraform apply ```
-
-![Preview](./Images/tf18.png)
-
-![Preview](./Images/tf19.png)
-
-* Now to remove the infra ``` terraform destroy ```
-
-![Preview](./Images/tf20.png)
-
-* The configuration which we used
-
-```yaml
-provider "aws" {
-    access_key  = "<your-access-key>"
-    secret_key  = "<your-secret-key>"
-    region      = "ap-south-1"
-}
-
-resource "aws_s3_bucket" "b" {
-  bucket = "qt-tf-s3-1"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
-}
 ```
-## Terraform Language
-* Terraform configuration can be expressed in
-    * HCL/Terraform Language
-    * JSON
-* The two major elements in the Terraform language are
-    * Arguments:
-        * Assigns a value to a particular name ``` bucket = "qt-tf-s3-1" ```
-    * Blocks:
-        * A block is container for other content
-        * Three major blocks of terraform are
-            * provider block
-            * resource block
-            * datasource block
+# Launch terminal 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-## Provider Block:
-* Basic Syntax:
+* Windows Users => Install Chocolatey [Refer Here](https://chocolatey.org/install)
 
-```yaml
-provider "<provider-name>" {
-    <argument-1>
-    <argument-2>
+```
+# Launch Powershell as admin
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+Close your terminal/Powershell and relaunch as admin
+```
+
+* Install Terraform
+    * Windows => choco => ``` choco install terraform -y ```
+    * Mac => brew => ``` brew install terraform ``` [Refer Here](https://formulae.brew.sh/formula/terraform)
+
+## Terraform Terminologies
+
+* Provider: This specifies terraform where to create infrastructure
+* Resource: Resources are the core elements of your infrastructure. 
+    * The inputs which we specify about the resource are called as ``` arguments ```
+    * When we create resources using terraform they specify some outputs of the resource which are called as ``` attributes ```
+    * DataSource: This helps us in querying information (about resources) from terraform configuration.
+
+## Writing a Terraform Configuration file
+* We need to specify the provider 
+    * Syntax:
+        ```
+        provider "<name-of-provider>" {
+          arg1 = "value1"
+          ...
+          ..
+          argn = "value2"
+         }
+        ```
+* We need to find a right resource from the provider
+
+```
+resource "<resource-type>" "<resource-name>" {
+    arg1 = "value1"
+    ...
     ..
-    <argument-n>
+    argn = "value2"
+
 }
 ```
-* Example
+* Create private s3 bucket in AWS Cloud
 
-```yaml
+```
 provider "aws" {
-    access_key  = "LKJLKSKLJDALDJLKSADSLA"
-    secret_key  = "lksdfjdlkasfjlsadfjlksdafjlksdafjdallksafj"
-    region      = "ap-south-1"
+    region = "us-west-2"
+}
+
+resource "aws_s3_bucket" "my_bucket" {
+    bucket = "my-tf-de-s3-bucket"
+    acl = "private"
 }
 ```
+### Activity: From Terraform Create an S3 bucket in AWS Cloud
 
-## Resource Block
-* Basic Syntax
-
-```yaml
-resource "<PROVIDER>_<TYPE>" "<NAME>" {
-    <argument-1>
-    <argument-2>
-    ..
-    <argument-n>
-}
-```
-* Example
-
-```yaml
-resource "aws_s3_bucket" "b" {
-  bucket = "qt-tf-s3-1"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
-}
-```
-
-## Cloud Account Creations
-* AWS: Free Tier Account
-* AZURE: Free Tier Account
-
-
-
+* Manual Steps:
+    * Login into AWS Console
+    * create s3 bucket
+* Approach in Terraform
+    * Find the Provider, Google: terraform aws provider
