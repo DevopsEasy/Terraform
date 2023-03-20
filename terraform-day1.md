@@ -1,57 +1,32 @@
-### Terraform
-* Software isn’t done until you deliver it to the customers.
-* What Terraform Does?
+### Need for Infrastructure Provisioning
 
-![Preview](./Images/tf1.png)
 
-## Infrastructure as code (IAC)
-* The idea behind IAC is that you write & execute the code to define, deploy, update and destroy your infrastructure
-* Consider the following as the architecture of Redbus Application
+* In CI/CD pipelines, we need to create various test environments according to organizational QA policy.
 
-![Preview](./Images/tf2.png)
+* To create test environments, we might also need to create virtual infrastructure on the cloud / Hypervisor (VMWare, Hyper-V).
 
-* Now lets assume RedBus is working on AWS
+* To automate this infrastructure creation/updation we need some kind of a tool and these tools are called as Infra Provisioning Tools
 
-![Preview](./Images/tf3.png)
+* Depending on the infrastructure used in the organization we will have different tools which can help us in automating infrastructure creation
 
-* Now lets assume Redbus is working on Azure
+![Preview](./Images/terraform1.png)
 
-![Preview](./Images/tf4.png)
+* To solve this problem an organization called as Hashicorp has came up with a tool called as Terraform which can work with multiple infra providers
 
-```yaml
-# AWS
-resource "aws_instance" "app" {
-    instance_type       = "t2.micro"
-    ami                 = "ami-892347389247"
-    availability_zone   = "us-west-2a"
-}
+![Preview](./Images/terraform2.png)
 
-# Azure 
-resource "azurerm_vm" "app" {
-    size                = "Standard_B1s"
-    vmimage             = "ubuntu2004LTS"
-    location            = "eastus"
-}
+* Procedural vs Declarative
 
-#vmware
+![Preview](./Images/terraform3.png)
 
-resource "vmware_vm" "app"  {
-    cpu     = "2"
-    ram     = "4GB"
-    image   = "ubuntu"  
-}
-```
+* Using Terraform we would use declarative approach to specify what are our infrastructure needs => Infrastructure as Code (IaC)
 
-![Preview](./Images/tf5.png)
+* Workflow: 
 
-* The major concepts of terraform are
-    * Provider:
-        * Where we can create infrastructure
-    * Resource:
-        * What has to be created
-    * DataSource:
-        * Query information about anything in the Provider
+![Preview](./Images/terraform4.png)
 
-* Relevance of Terraform in CI/CD Pipeline
+* Terraform is Cloud-agnostic because deploy to any cloud or virtual infra provider
 
-![Preview](./Images/tf6.png)
+![Preview](./Images/terraform5.png)
+
+* Terraform integrates with different clouds through Terrraform providers
