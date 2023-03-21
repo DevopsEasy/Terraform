@@ -3,7 +3,7 @@
 * Open this folder with vscode
 * Install Terraform Extension from Hashicorp 
 
-![Preview](./Images/terraform6.png)
+![Preview](./Images/terraform6.PNG)
 
 * Install AWS CLI
    * Windows => ``` choco install awscli ```
