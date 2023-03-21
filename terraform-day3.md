@@ -1,147 +1,85 @@
-### Terraform contd
-* The inputs provided to the Resources/Datasources is called as arguments and the outputs are referred as attributes.
+### Create an S3 bucket in AWS Cloud 
+* Create a new folder and create an empty file main.tf in it.
+* Open this folder with vscode
+* Install Terraform Extension from Hashicorp 
 
-## Activity 1: AWS Infrastructure Simple
-* Lets try to create the below infrastructure using terraform
+![Preview](./Images/terraform6.png)
 
-![Preview](./Images/tf21.png)
+* Install AWS CLI
+   * Windows => ``` choco install awscli ```
+   *  Mac => ``` brew install awscli ```
 
-* Manual Steps
+* Create an IAM authentication as mentioned [Refer Here](https://serverless-stack.com/chapters/create-an-iam-user.html)
+* Now execute aws configure and enter the secret access key id and access key, region (us-west-2) and output format => json
+* So after configuring credentials. Execute ``` terraform init ``` to download the providers configured 
 
-![Preview](./Images/tf22.png)
+![Preview](./Images/terraform7.png)
 
-![Preview](./Images/tf23.png)
+* Now we need to configure the resource s3_bucket [Refer Here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket)
+* Now fill the required arguments [Refer Here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#argument-reference)
+* Now lets check for the validity of the configuration which we have written 
 
-![Preview](./Images/tf24.png)
+![Preview](./Images/terraform8.png)
 
-![Preview](./Images/tf25.png)
+* Now try creating the resources by executing ``` terraform apply ```
 
-![Preview](./Images/tf26.png)
+```
+resource "aws_s3_bucket" "b" {
+  bucket = "my-tf-de_test-bucket"
 
-![Preview](./Images/tf27.png)
-
-![Preview](./Images/tf28.png)
-
-![Preview](./Images/tf29.png)
-
-![Preview](./Images/tf30.png)
-
-![Preview](./Images/tf31.png)
-
-![Preview](./Images/tf32.png)
-
-![Preview](./Images/tf33.png)
-
-
-* Provider = aws
-* Resource = vpc, subnet
-* Lets configure visual studio code to help us with terraform
-
-![Preview](./Images/tf34.png)
-
-![Preview](./Images/tf35.png)
-
-* When terraform commands are executed generally they scan all the .tf files in the directory and execute the configuration.
-* [Refer Here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) for the vpc documentation
-
-![Preview](./Images/tf36.png)
-
-* Lets define the provider and vpc definition
-
-```yaml
-provider "aws" {
-    access_key  = "LKJLKSKLJDALDJLKSADSLA"
-    secret_key  = "lksdfjdlkasfjlsadfjlksdafjlksdafjdallksafj"
-    region      = "ap-south-1"
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
 }
 
-# lets try to define the resource for the vpc
-resource "aws_vpc" "myvpc" {
-    cidr_block = "192.168.0.0/16"
-
-    tags = {
-      "Name" = "from-tf"
-    }
-
+resource "aws_s3_bucket_acl" "example" {
+  bucket = aws_s3_bucket.b.id
+  acl    = "private"
 }
 ```
 
-* Now perform init and validate. Now lets apply terraform to create infra terraform apply
+![Preview](./Images/terraform9.png)
 
-![Preview](./Images/tf37.png)
+* Now check for the resources created or not 
 
-![Preview](./Images/tf38.png)
+![Preview](./Images/terraform10.png)
 
-![Preview](./Images/tf39.png)
+* Once the infra is created, lets execute ``` terraform apply ``` again
 
-* Now lets try to add web1 and web2 subnets Refer Here for the subnet resource documentation
-* The vpc id is the attribute of the resource block to access attributes the syntax is ``` <PROVIDER>_<TYPE>.<NAME>.<ATTRIBUTE-NAME> ```
-* We have added the following for the subnets
+![Preview](./Images/terraform11.png)
 
-```yaml
-# lets create web1 subnet
-resource "aws_subnet" "web1" {
-    vpc_id              = aws_vpc.myvpc.id
-    cidr_block          = "192.168.0.0/24"
-    availability_zone   = "ap-south-1a"
+* Terraform is idempotent i.e. when you run terraform multiple times to create the infrastructure it will lead to the same result i.e. your desired state
+* Now lets change the acl to ``` public-read ``` & apply 
+```
+resource "aws_s3_bucket" "b" {
+  bucket = "my-tf-de_test-bucket"
 
-    tags                = {
-      "Name"            = "web1-tf"
-    }
-
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
 }
 
-# lets create web2 subnet
-resource "aws_subnet" "web2" {
-    vpc_id              = aws_vpc.myvpc.id
-    cidr_block          = "192.168.1.0/24"
-    availability_zone   = "ap-south-1b"
-
-    tags                = {
-      "Name"            = "web2-tf"
-    }
-
+resource "aws_s3_bucket_acl" "example" {
+  bucket = aws_s3_bucket.b.id
+  acl    = "public-read"
 }
 ```
+![Preview](./Images/terraform12.png)
 
-* Now validate and apply
+![Preview](./Images/terraform13.png)
 
-![Preview](./Images/tf40.png)
+* Now lets try to delete the infrastructure which we have created 
 
-![Preview](./Images/tf41.png)
+![Preview](./Images/terraform14.png)
 
-* Now lets create db1 and db2 subnet
+![Preview](./Images/terraform15.png)
 
-```yaml
-# lets create db1 subnet
-resource "aws_subnet" "db1" {
-    vpc_id              = aws_vpc.myvpc.id
-    cidr_block          = "192.168.2.0/24"
-    availability_zone   = "ap-south-1a"
+* Terraform Workflow
 
-    tags                = {
-      "Name"            = "db1-tf"
-    }
+![Preview](./Images/terraform-workflow.png)
 
-}
+* Next Steps
 
-# lets create db2 subnet
-resource "aws_subnet" "db2" {
-    vpc_id              = aws_vpc.myvpc.id
-    cidr_block          = "192.168.3.0/24"
-    availability_zone   = "ap-south-1b"
-
-    tags                = {
-      "Name"            = "db2-tf"
-    }
-
-}
-```
-
-* Now validate and apply
-
-![Preview](./Images/tf42.png)
-
-![Preview](./Images/tf43.png)
-* Next steps:
-    * Lets improve the terraform configuration which we have used to create the activity 1.
+![Preview](./Images/aws-vpc-terraform.png)
