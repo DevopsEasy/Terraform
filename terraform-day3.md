@@ -19,7 +19,7 @@
 * Now fill the required arguments [Refer Here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#argument-reference)
 * Now lets check for the validity of the configuration which we have written 
 
-![Preview](./Images/terraform8.PNG)
+![Preview](./Images/terraform9.PNG)
 
 * Now try creating the resources by executing ``` terraform apply ```
 
@@ -39,7 +39,7 @@ resource "aws_s3_bucket_acl" "example" {
 }
 ```
 
-![Preview](./Images/terraform9.PNG)
+![Preview](./Images/terraform8.PNG)
 
 * Now check for the resources created or not 
 
