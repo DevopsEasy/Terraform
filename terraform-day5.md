@@ -84,7 +84,7 @@ resource "aws_vpc" "primary_vpc" {
 }
 ```
 
-* To pass the variable value from cli terraform apply -var="vpc_cidr=192.168.0.0/16"
+* To pass the variable value from cli ``` terraform apply -var="vpc_cidr=192.168.0.0/16" ```
 
 * Lets create a variable for subnet cidr ranges 
 
