@@ -1,7 +1,7 @@
 ## AWS Security Group & EC2 Instance
 * AWS Infra Setup Architecute
 
-![Preview](./Images/vpc-network.PNG)
+![Preview](./Images/vpc-network.png)
 
 
 * Now we need to create a ec2 instance (virtual machine), So lets try to understand how to do it manually.
