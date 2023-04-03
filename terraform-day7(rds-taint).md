@@ -122,5 +122,31 @@ output "db_security_group_id" {
 * Now lets explore terraform workspace cli
 
 
+```
+terraform workspace --help
+terraform workspace list
+```
+* Lets try to create two workspaces
+* ST => System Test
+* UAT => Staging
+
+```
+terraform workspace new ST
+terraform workspace new UAT
+terraform workspace list
+```
+
+* Select the current workspace as ST
+
+`` terraform workspace select ST ```
+
+* Realtime usecase
+```
+# if the terraform code is available in some git try to configure the git to clone 
+terraform init
+terraform workspace select <build-parameter>
+terraform apply -var-file=<varfile> -auto-approve
+```
+
 
 
