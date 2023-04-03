@@ -101,6 +101,14 @@ output "db_security_group_id" {
 * Terraform apply command internally creates a plan and then executes the plan
 * We can explicity create a plan ``` terraform plan -out <filename> ``` and then ``` terraform apply <filename> ```
 
+## Terraform Taint
+* Using taint we can recreate the resource i.e. mark the resource for recreation.
+* Resource can be marked to taint by execution ``` terraform taint <resourcetype>.<resourcename> ```
+* Now if we execute terraform apply the resource will be destroyed and recreated.
+* Execute Terraform apply
+* Taint is designed to recreate the resource when you observe mismatches
+* Note: before apply command is executed if you want to undo taint ``` terraform untaint <resourcetype>.<resourcename> ```
+
 ## Terraform Workspaces
 * Generally when we write terraform configuration, we would like to create multiple environments such as
 * Developer
