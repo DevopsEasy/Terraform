@@ -54,6 +54,7 @@ resource "aws_vpc" "primary_vpc" {
   }
 }
 ```
+## Dynamic Block
 
 * Dynamic Block [Refer Here](https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks)
 
