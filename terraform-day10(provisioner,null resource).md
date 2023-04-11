@@ -21,6 +21,12 @@
 * The following example shows we create a EC2 instance after that it will give us the attribute private IP address of the server.
 * To create a aws key pair.
 
+## Creation of key in local server
+* command to generate key
+
+```
+ssh-keygen
+```
 ```
 resource "aws_key_pair" "dekey" {
   key_name   = "demykey"
