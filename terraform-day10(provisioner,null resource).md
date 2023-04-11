@@ -36,15 +36,15 @@ resource "aws_key_pair" "dekey" {
 
 ```
 provider "aws" {
-access_key = ""
-secret_key = ""
-region = ""
+  access_key = ""
+  secret_key = ""
+  region = ""
 }
 
-resource aws_instance "myec2" {
-ami = "ami-0e306788ff2473ccb"
-instance_type = "t2.micro"
-provisioner "local-exec" {
+resource "aws_instance" "myec2" {
+  ami = "ami-0e306788ff2473ccb"
+  instance_type = "t2.micro"
+  provisioner "local-exec" {
   command = "echo ${aws_instance.myec2.private_ip} >> private_ips.txt"
 }
 }
