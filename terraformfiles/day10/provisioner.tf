@@ -56,7 +56,7 @@ resource "aws_instance" "ec2_example" {
       type        = "ssh"
       host        = self.public_ip
       user        = "ubuntu"
-      private_key = file("/home/ubuntu/.ssh/dekey")
+      private_key = file("/home/ubuntu/.ssh/id_rsa")
       timeout     = "4m"
    }
 }
