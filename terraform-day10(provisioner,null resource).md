@@ -61,6 +61,7 @@ resource "aws_instance" "ec2_example" {
     ami = "ami-0db245b76e5c21ca1"
     instance_type = "t2.micro"
     key_name= "mtckey"
+    vpc_security_group_ids = [aws_security_group.test.id]
 
   provisioner "remote-exec" {
     inline = [
@@ -91,6 +92,7 @@ resource "aws_instance" "ec2_example" {
     ami = "ami-0db245b76e5c21ca1"
     instance_type = "t2.micro"
     key_name= "mtckey"
+    vpc_security_group_ids = [aws_security_group.test.id]
 
   provisioner "file" {
     source      = "/home/ubuntu/test-file.txt"
