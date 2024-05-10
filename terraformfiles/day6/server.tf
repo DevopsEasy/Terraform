@@ -1,5 +1,5 @@
 resource "aws_instance" "web_instance_1" {
-  ami                           = "ami-0892d3c7ee96c0bf7"
+  ami                           = "ami-03c983f9003cb9cd1"
   associate_public_ip_address   = true
   instance_type                 = "t2.micro" 
   key_name                      = "terraform" 
